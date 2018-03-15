@@ -16,6 +16,9 @@
     <Filter Include="Исходные файлы\Utility classes">
       <UniqueIdentifier>{8b84e974-ffb8-4fd7-af96-e5ac1d570638}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Genetic algorithms">
+      <UniqueIdentifier>{e7dd8c03-0b1c-42d0-9262-fbb6dfcfb3a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="Position.cpp">
       <Filter>Исходные файлы\Utility classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Gene.cpp">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
