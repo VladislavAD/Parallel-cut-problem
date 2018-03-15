@@ -24,5 +24,8 @@
     <ClCompile Include="Point.cpp">
       <Filter>Исходные файлы\Utility classes</Filter>
     </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>Исходные файлы\Utility classes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
