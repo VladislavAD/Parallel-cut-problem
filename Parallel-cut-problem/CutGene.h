@@ -2,12 +2,15 @@
 #include "Point.cpp"
 #include "Position.cpp"
 
-class Gene {
+class CutGene {
 public:
-	Position position;
+	float positionX;
+	int order;
 	std::list<Point> points;
 
-	Gene(std::list<Point> points) {
+	CutGene(std::list<Point> points) {
 		this->points = points;
+		this->positionX = 0;
+		this->order = 0;
 	}
 };

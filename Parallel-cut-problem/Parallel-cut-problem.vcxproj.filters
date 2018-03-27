@@ -30,8 +30,16 @@
     <ClCompile Include="Position.cpp">
       <Filter>Исходные файлы\Utility classes</Filter>
     </ClCompile>
-    <ClCompile Include="Gene.cpp">
+    <ClCompile Include="CutUnit.h">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="CutGene.h">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IUnit.h">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

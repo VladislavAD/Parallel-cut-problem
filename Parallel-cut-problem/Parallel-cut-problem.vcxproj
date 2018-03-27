@@ -115,10 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Gene.cpp" />
+    <ClCompile Include="CutUnit.h" />
+    <ClCompile Include="CutGene.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Position.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IUnit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
