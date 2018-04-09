@@ -6,11 +6,9 @@ class CutGene {
 public:
 	float positionX;
 	int order;
-	std::list<Point> points;
 
-	CutGene(std::list<Point> points) {
-		this->points = points;
-		this->positionX = 0;
-		this->order = 0;
+	CutGene(float positionX, int order) {
+		this->positionX = positionX;
+		this->order = order;
 	}
 };

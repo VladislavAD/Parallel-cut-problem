@@ -41,5 +41,8 @@
     <ClInclude Include="IUnit.h">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="Figure2D.h">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
