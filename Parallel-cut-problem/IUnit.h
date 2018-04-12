@@ -2,8 +2,8 @@
 
 class IUnit {
 public:
-	virtual int getGenesCount();
-	virtual void mutateGene(int number);
-	virtual float getEvaluation();
-	virtual IUnit crossingoverWithUnit(IUnit unit);
+	virtual int GetGenesCount();
+	virtual void MutateGene(int number);
+	virtual float GetEvaluation();
+	virtual IUnit CrossingoverWithUnit(IUnit unit);
 };

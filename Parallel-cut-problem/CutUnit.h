@@ -9,49 +9,25 @@ class CutUnit : public IUnit {
 private:
 	static std::vector<Figure2D> figures;
 	static float lineWidth;
+	const float horizontalMutation = 1.0f;
 
 	CutGene * genes;
 	int genesCount;
 	float evaluation;
-
-	/// <summary>
-	/// Проверка на пересечение генов
-	/// </summary>
-	bool UnitsIntersection(CutGene first, CutGene second) {
-		bool ka = false;
-		//for (int i = 0; i < first.size_ + 1; i++) {
-		//	for (int j = 0; j < second.size_ + 1; j++)
-		//	{
-		//		//if (i != j){
-		//		Point f1, e1, f2, e2;
-		//		f1 = Point(first.vertices_[i%first.size_].x + first.getPosition().x, first.vertices_[i%first.size_].y + first.getPosition().y);
-		//		e1 = Point(first.vertices_[(i + 1) % first.size_].x + first.getPosition().x, first.vertices_[(i + 1) % first.size_].y + first.getPosition().y);
-		//		f2 = Point(second.vertices_[j%second.size_].x + second.getPosition().x, second.vertices_[j%second.size_].y + second.getPosition().y);
-		//		e2 = Point(second.vertices_[(j + 1) % second.size_].x + second.getPosition().x, second.vertices_[(j + 1) % second.size_].y + second.getPosition().y);
-
-		//		float check = (first.getPosition().x - second.getPosition().x)*(first.getPosition().x - second.getPosition().x) + (first.getPosition().y - second.getPosition().y)*(first.getPosition().y - second.getPosition().y);
-
-		//		if (LineIntersection(f1, e1, f2, e2))
-		//			ka = true;
-		//		//}
-		//	}
-		//}
-		return ka;
-	}
 
 public:
 
 	///<summary>
 	/// Забирает элемент с памятью
 	///</summary>
-	static void addFigure(Figure2D newFigure) {
+	static void AddFigure(Figure2D newFigure) {
 		figures.push_back(newFigure);
 	}
 
 	///<summary>
 	/// Задать ширину полосы раскроя
 	///</summary>
-	static void setLineWidth(float newLineWidth) {
+	static void SetLineWidth(float newLineWidth) {
 		lineWidth = newLineWidth;
 	}
 
@@ -80,12 +56,39 @@ public:
 		}
 	}
 
-	int getGenesCount() {
-		return genesCount;
+	int GetGenesCount() {
+		return figures.size;
 	}
 
-	void mutateGene(int number) {
+	void MutateGene(int number) {
+		int randomMutationType = rand() % 3;
+		switch (randomMutationType)
+		{
+			// Первый тип мутации - сдвиг по горизонтали
+		case 0: {
+			genes[number].positionX += -horizontalMutation / 2.0f + (rand() % (int)(horizontalMutation * 1000)) / 1000.0f;
+			break;
+		}
+			// Второй тип мутации - поворот
+		case 1: {
+			genes[number].rotation += rand() % 360000 / 1000.0f;
+			break;
+		}
+			// Третий тип мутации - изменение порядка, ген меняется порядком с другим геном
+		case 2: {
+			int order = genes[number].order;
+			int swapWith = rand() % figures.size;
+			genes[number].order = genes[swapWith].order;
+			genes[swapWith].order = order;
+			break;
+		}
 
+		default:
+			break;
+		}
+	}
+
+	IUnit CrossingoverWithUnit(IUnit unit) {
 	}
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {

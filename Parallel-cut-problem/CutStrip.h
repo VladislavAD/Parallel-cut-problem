@@ -25,7 +25,7 @@ public:
 		this->width = width;
 
 		int * sortedOrder;
-		sortOrderOfGenes(genes, *sortedOrder, figures.size);
+		SortOrderOfGenes(genes, *sortedOrder, figures.size);
 
 		positionsOfFigures = new Position[figures.size];
 		for (int i = 0; i < figures.size; i++)
@@ -70,7 +70,7 @@ public:
 	/// <summary>
 	/// «аполнить массив sortedOrder пор€дком бросани€ фигур
 	/// </summary>
-	void sortOrderOfGenes(CutGene genes[], int & sortedOrder, int size) {
+	void SortOrderOfGenes(CutGene genes[], int & sortedOrder, int size) {
 		int * order = new int[size];
 		for (int i = 0; i < size; i++) {
 			order[i] = genes[i].order;
@@ -87,6 +87,11 @@ public:
 			}
 		}
 		sortedOrder = *bufSortedOrder;
+	}
+
+	Point * GetResultPositions()
+	{
+		return positionsOfFigures;
 	}
 
 	~CutStrip() {
