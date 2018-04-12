@@ -122,6 +122,7 @@
     <ClCompile Include="Position.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CutStrip.h" />
     <ClInclude Include="Figure2D.h" />
     <ClInclude Include="IUnit.h" />
   </ItemGroup>

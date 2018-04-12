@@ -1,6 +1,6 @@
 #include "Point.cpp"
 
-class Position : Point {
+class Position : public Point {
 public:
 	float r;
 
