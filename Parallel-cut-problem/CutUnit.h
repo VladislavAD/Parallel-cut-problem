@@ -17,118 +17,30 @@ private:
 	float evaluation;
 
 public:
-	CutUnit &operator=(const CutUnit& other) {
-		memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-		evaluation = other.evaluation;
-		return *this;
-	}
+	CutUnit & operator=(const CutUnit& other);
 
 	///<summary>
 	/// «абирает элемент с пам€тью
 	///</summary>
-	static void AddFigure(Figure2D newFigure) {
-		figures.push_back(newFigure);
-	}
+	static void AddFigure(Figure2D newFigure);
 
 	///<summary>
 	/// «адать ширину полосы раскро€
 	///</summary>
-	static void SetLineWidth(float newLineWidth) {
-		lineWidth = newLineWidth;
-	}
+	static void SetLineWidth(float newLineWidth);
 
 	///<summary>
 	/// »нициализаци€ генов
 	///</summary>
-	void InitializeGenes() {
-		if (figures.size() == 0) {
-			return;
-		}
-		genes = new CutGene[figures.size()];
+	void InitializeGenes();
 
-		// —оздадим вектор с пор€дком и случайно замешаем его
-		std::vector<int> randomOrderNumbers = std::vector<int>();
-		for (int i = 0; i < figures.size(); i++) {
-			randomOrderNumbers.push_back(i);
-		}
-		std::random_shuffle(randomOrderNumbers.begin(), randomOrderNumbers.end());
+	virtual int GetGenesCount();
 
-		for (int i = 0; i < figures.size(); i++) {
-			float positionX = (rand() % ((int)lineWidth * 1000)) / 1000.0f;
-			float rotation = (rand() % (360 * 100)) / 100.0f;
-			int order = randomOrderNumbers.back();
-			genes[i] = CutGene(positionX, rotation, order);
-			randomOrderNumbers.pop_back();
-		}
-	}
+	virtual void MutateGene(int number);
 
-	virtual int GetGenesCount() {
-		return figures.size();
-	}
+	virtual void MutateGene();
 
-	virtual void MutateGene(int number) {
-		int randomMutationType = rand() % 3;
-		switch (randomMutationType)
-		{
-			// ѕервый тип мутации - сдвиг по горизонтали
-		case 0: {
-			genes[number].positionX += -horizontalMutation / 2.0f + (rand() % (int)(horizontalMutation * 1000)) / 1000.0f;
-			break;
-		}
-			// ¬торой тип мутации - поворот
-		case 1: {
-			genes[number].rotation += rand() % 360000 / 1000.0f;
-			break;
-		}
-			// “ретий тип мутации - изменение пор€дка, ген мен€етс€ пор€дком с другим геном
-		case 2: {
-			int order = genes[number].order;
-			int swapWith = rand() % figures.size();
-			genes[number].order = genes[swapWith].order;
-			genes[swapWith].order = order;
-			break;
-		}
-
-		default:
-			break;
-		}
-	}
-
-	virtual void MutateGene() {
-		int number = rand() % figures.size();
-		int randomMutationType = rand() % 3;
-		switch (randomMutationType)
-		{
-			// ѕервый тип мутации - сдвиг по горизонтали
-		case 0: {
-			genes[number].positionX += -horizontalMutation / 2.0f + (rand() % (int)(horizontalMutation * 1000)) / 1000.0f;
-			break;
-		}
-				// ¬торой тип мутации - поворот
-		case 1: {
-			genes[number].rotation += rand() % 360000 / 1000.0f;
-			break;
-		}
-				// “ретий тип мутации - изменение пор€дка, ген мен€етс€ пор€дком с другим геном
-		case 2: {
-			int order = genes[number].order;
-			int swapWith = rand() % figures.size();
-			genes[number].order = genes[swapWith].order;
-			genes[swapWith].order = order;
-			break;
-		}
-
-		default:
-			break;
-		}
-	}
-
-	virtual void * ExtractGene(int geneNumber) {
-		if (geneNumber >= 0 && geneNumber < figures.size()) {
-			return &genes[geneNumber];
-		}
-		return NULL;
-	}
+	virtual void * ExtractGene(int geneNumber);
 
 	//IUnit CrossingoverWithUnit(IUnit unit) {
 	//	CutUnit newUnit = CutUnit();
@@ -139,43 +51,13 @@ public:
 	/// <summary>
 	///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи
 	/// </summary>
-	CutUnit DummyCrossingover(CutUnit unit) {
-		int exchangeGeneNumber = rand() % figures.size();
-		CutUnit newCutUnit = *this;
-		int oldOrder = this->genes[exchangeGeneNumber].order;
-		int newOrder = unit.genes[exchangeGeneNumber].order;
+	CutUnit DummyCrossingover(CutUnit unit);
 
-		// ћен€ем пор€док у гена с таким же пор€дком, какой будет новый
-		for (int i = 0; i < figures.size(); i++) {
-			if (this->genes[i].order == newOrder) {
-				newCutUnit.genes[i].order = oldOrder;
-				break;
-			}
-		}
+	virtual float GetEvaluation();
 
-		newCutUnit.genes[exchangeGeneNumber] = unit.genes[exchangeGeneNumber];
+	void Evaluate();
 
-		return newCutUnit;
-	}
-
-	virtual float GetEvaluation() {
-		return evaluation;
-	}
-
-	void Evaluate() {
-		CutStrip cutStrip = CutStrip(figures, genes, lineWidth);
-		evaluation = cutStrip.UnitEvaluation();
-		delete &cutStrip;
-	}
-
-	static bool sortFunction(CutUnit left, CutUnit right) {
-		if (left.evaluation > right.evaluation) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	static bool sortFunction(CutUnit left, CutUnit right);
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {
@@ -183,5 +65,3 @@ public:
 		}
 	}*/
 };
-
-std::vector<Figure2D> CutUnit::figures;

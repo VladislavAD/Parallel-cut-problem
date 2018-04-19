@@ -115,6 +115,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CutGene.cpp" />
+    <ClCompile Include="CutStrip.cpp" />
+    <ClCompile Include="CutUnit.cpp" />
     <ClCompile Include="CutUnit.h" />
     <ClCompile Include="CutGene.h" />
     <ClCompile Include="main.cpp" />
