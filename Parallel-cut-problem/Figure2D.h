@@ -28,7 +28,14 @@ private:
 
 public:
 
-	Figure2D() {};
+	Figure2D() {
+		vertexes = std::vector<Point>();
+		vertexes.push_back(Point(1, 1));
+		vertexes.push_back(Point(0, 1));
+		vertexes.push_back(Point(0, 0));
+		vertexes.push_back(Point(1, 0));
+		CalculateMinimumAndMaximum();
+	};
 
 	Figure2D(std::vector<Point> verticies) {
 		this->vertexes = verticies;
@@ -45,15 +52,15 @@ public:
 
 	static bool IsFiguresIntersecting(Figure2D first, Point firstPosition, Figure2D second, Point secondPosition) {
 		bool intersects = false;
-		for (int i = 0; i < first.vertexes.size + 1; i++) {
-			for (int j = 0; j < second.vertexes.size + 1; j++)
+		for (int i = 0; i < first.vertexes.size() + 1; i++) {
+			for (int j = 0; j < second.vertexes.size() + 1; j++)
 			{
 				Point startPointFirstLine, endPointFirstLine, startPointSecondLine, endPointSecondLine;
 
-				int startVertexNumber1 = i % first.vertexes.size;
-				int endVertexNumber1 = (i + 1) % first.vertexes.size;
-				int startVertexNumber2 = j % second.vertexes.size;
-				int endVertexNumber2 = (j + 1) % second.vertexes.size;
+				int startVertexNumber1 = i % first.vertexes.size();
+				int endVertexNumber1 = (i + 1) % first.vertexes.size();
+				int startVertexNumber2 = j % second.vertexes.size();
+				int endVertexNumber2 = (j + 1) % second.vertexes.size();
 
 				startPointFirstLine = Point(first.vertexes[startVertexNumber1]);
 				startPointFirstLine.Add(firstPosition);
@@ -76,7 +83,7 @@ public:
 	}
 
 	void RotateFigure(float angleDegree) {
-		for (int i = 0; i < vertexes.size; i++)
+		for (int i = 0; i < vertexes.size(); i++)
 		{
 			vertexes[i].Rotate(angleDegree);
 		}

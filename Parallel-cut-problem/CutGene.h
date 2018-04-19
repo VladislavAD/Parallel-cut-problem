@@ -1,3 +1,4 @@
+#pragma once
 #include <list>
 #include "Point.cpp"
 #include "Position.cpp"
@@ -16,12 +17,12 @@ public:
 		this->order = order;
 	}
 
-	CutGene& operator=(const CutGene& obj) {
+	/*CutGene& operator=(const CutGene& obj) {
 		if (this != &obj) {
 			this->positionX = obj.positionX;
 			this->rotation = obj.rotation;
 			this->order = obj.order;
 		}
 		return *this;
-	}
+	}*/
 };

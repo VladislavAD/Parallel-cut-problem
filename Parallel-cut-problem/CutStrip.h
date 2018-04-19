@@ -1,5 +1,7 @@
 #pragma once
-#include "CutUnit.h"
+#include "CutGene.h"
+#include <vector>
+#include "Figure2D.h"
 
 class CutStrip {
 private:
@@ -16,7 +18,7 @@ public:
 		this->genes = genes;
 		this->width = width;
 		// Копированные фигуры повернём
-		for (int i = 0; i < figures.size; i++) {
+		for (int i = 0; i < figures.size(); i++) {
 			figures[i].RotateFigure(genes[i].rotation);
 		}
 	}
@@ -24,18 +26,18 @@ public:
 	float UnitEvaluation() {
 		this->width = width;
 
-		int * sortedOrder;
-		SortOrderOfGenes(genes, *sortedOrder, figures.size);
+		int * sortedOrder = new int[figures.size()];
+		SortOrderOfGenes(genes, *sortedOrder, figures.size());
 
-		positionsOfFigures = new Position[figures.size];
-		for (int i = 0; i < figures.size; i++)
+		positionsOfFigures = new Position[figures.size()];
+		for (int i = 0; i < figures.size(); i++)
 		{
 			positionsOfFigures[i] = Position(0.0f, 0.0f, 0.0f);
 		}
 
 		// Роняем фигуры в установленном порядке
 		currentHeight = 0;
-		for (int i = 0; i < figures.size; i++)
+		for (int i = 0; i < figures.size(); i++)
 		{
 			// Определяем начальную позицию
 			int currentFigure = sortedOrder[i];
@@ -96,6 +98,6 @@ public:
 
 	~CutStrip() {
 		figures.clear();
-		delete(positionsOfFigures);
+		delete[] positionsOfFigures;
 	}
 };

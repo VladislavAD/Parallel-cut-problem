@@ -47,5 +47,8 @@
     <ClInclude Include="CutStrip.h">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="DummyPopulation.h">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
