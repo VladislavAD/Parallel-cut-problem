@@ -17,6 +17,12 @@ private:
 	float evaluation;
 
 public:
+	CutUnit();
+
+	~CutUnit();
+
+	CutUnit(const CutUnit& other);
+
 	CutUnit & operator=(const CutUnit& other);
 
 	///<summary>

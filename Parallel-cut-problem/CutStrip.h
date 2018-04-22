@@ -16,14 +16,16 @@ public:
 
 	CutStrip(std::vector<Figure2D> figures, CutGene genes[], float width);
 
+	~CutStrip();
+
+	CutStrip & operator=(const CutStrip& other);
+
 	float UnitEvaluation();
 
 	/// <summary>
 	/// «аполнить массив sortedOrder пор€дком бросани€ фигур
 	/// </summary>
-	void SortOrderOfGenes(CutGene genes[], int & sortedOrder, int size);
+	int * SortOrderOfGenes(CutGene genes[], int size);
 
 	Point * GetResultPositions();
-
-	~CutStrip();
 };

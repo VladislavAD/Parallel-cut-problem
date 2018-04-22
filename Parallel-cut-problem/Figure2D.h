@@ -10,6 +10,8 @@ private:
 	Point maximum = Point(0, 0);
 
 	void CalculateMinimumAndMaximum() {
+		minimum = vertexes[0];
+		maximum = vertexes[0];
 		for (int i = 0; i < vertexes.size(); i++) {
 			if (vertexes[i].x < minimum.x) {
 				minimum.x = vertexes[i].x;
@@ -40,6 +42,26 @@ public:
 	Figure2D(std::vector<Point> verticies) {
 		this->vertexes = verticies;
 		CalculateMinimumAndMaximum();
+	}
+
+	~Figure2D() {
+		vertexes.clear();
+	}
+
+	Figure2D & operator=(const Figure2D& other) {
+		this->vertexes = other.vertexes;
+		this->maximum = other.maximum;
+		this->minimum = other.minimum;
+		return *this;
+	}
+
+	bool FitLine(float lineWidth, float x) {
+		if (maximum.x + x < lineWidth && minimum.x + x > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	Point GetFigureMinimum() {

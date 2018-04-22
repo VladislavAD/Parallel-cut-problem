@@ -1,6 +1,7 @@
 #pragma once
 #include "CutUnit.h"
 #include <vector>
+#include <iostream>
 
 class DummyPopulation {
 private:
@@ -18,14 +19,21 @@ public:
 		maximumSteps = 1000;
 		newMutateUnits = 10;
 		newCrossingoverUnits = 10;
-		for (int i = 0; i < 9; i++) {
+		CutUnit::SetLineWidth(2.1);
+		for (int i = 0; i < 4; i++) {
 			CutUnit::AddFigure(Figure2D());
+		}
+		for (int i = 0; i < unitsSize; i++) {
+			CutUnit newUnit = CutUnit();
+			newUnit.InitializeGenes();
+			units.push_back(newUnit);
 		}
 	}
 
 	bool Step() {
 		if (!CheckStop()) {
 			Sort();
+			std::cout << units[0].GetEvaluation() << std::endl;
 			Mutate();
 			Crossingover();
 			return true;

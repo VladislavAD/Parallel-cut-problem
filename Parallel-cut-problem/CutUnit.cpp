@@ -1,9 +1,31 @@
 #pragma once
 #include "CutUnit.h"
 
+CutUnit::CutUnit() {}
+
+CutUnit::~CutUnit() {
+	delete[] genes;
+	genes = NULL;
+}
+
+CutUnit::CutUnit(const CutUnit& other) {
+	if (this != &other) {
+		delete[] genes;
+		genes = NULL;
+		genes = new CutGene[this->figures.size()];
+		memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
+		this->evaluation = other.evaluation;
+	}
+}
+
 CutUnit & CutUnit::operator=(const CutUnit& other) {
-	memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-	evaluation = other.evaluation;
+	if (this != &other) {
+		delete[] genes;
+		genes = NULL;
+		genes = new CutGene[this->figures.size()];
+		memcpy(this->genes, other.genes, sizeof(CutGene) * figures.size());
+		this->evaluation = other.evaluation;
+	}
 	return *this;
 }
 
@@ -38,12 +60,19 @@ void CutUnit::InitializeGenes() {
 	std::random_shuffle(randomOrderNumbers.begin(), randomOrderNumbers.end());
 
 	for (int i = 0; i < figures.size(); i++) {
-		float positionX = (rand() % ((int)lineWidth * 1000)) / 1000.0f;
-		float rotation = (rand() % (360 * 100)) / 100.0f;
-		int order = randomOrderNumbers.back();
-		genes[i] = CutGene(positionX, rotation, order);
+		bool newGeneFitLine = false;
+		while (!newGeneFitLine) {
+			float positionX = (rand() % ((int)lineWidth * 1000)) / 1000.0f;
+			float rotation = (rand() % (360 * 100)) / 100.0f;
+			int order = randomOrderNumbers.back();
+			genes[i] = CutGene(positionX, rotation, order);
+			Figure2D testFigure = figures[i];
+			testFigure.RotateFigure(rotation);
+			newGeneFitLine = testFigure.FitLine(lineWidth, positionX);
+		}
 		randomOrderNumbers.pop_back();
 	}
+	randomOrderNumbers.clear();
 }
 
 int CutUnit::GetGenesCount() {
@@ -149,7 +178,7 @@ float CutUnit::GetEvaluation() {
 void CutUnit::Evaluate() {
 	CutStrip cutStrip = CutStrip(figures, genes, lineWidth);
 	evaluation = cutStrip.UnitEvaluation();
-	delete &cutStrip;
+	//delete &cutStrip;
 }
 
 bool CutUnit::sortFunction(CutUnit left, CutUnit right) {
