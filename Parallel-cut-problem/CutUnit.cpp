@@ -1,7 +1,10 @@
 #pragma once
 #include "CutUnit.h"
 
-CutUnit::CutUnit() {}
+CutUnit::CutUnit() {
+	genes = NULL;
+	evaluation = -1;
+}
 
 CutUnit::~CutUnit() {
 	delete[] genes;
@@ -10,10 +13,14 @@ CutUnit::~CutUnit() {
 
 CutUnit::CutUnit(const CutUnit& other) {
 	if (this != &other) {
-		delete[] genes;
-		genes = NULL;
+		if (genes != NULL) {
+			delete[] genes;
+			genes = NULL;
+		}
 		genes = new CutGene[this->figures.size()];
-		memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
+		if (other.genes != NULL) {
+			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
+		}
 		this->evaluation = other.evaluation;
 	}
 }
@@ -23,7 +30,9 @@ CutUnit & CutUnit::operator=(const CutUnit& other) {
 		delete[] genes;
 		genes = NULL;
 		genes = new CutGene[this->figures.size()];
-		memcpy(this->genes, other.genes, sizeof(CutGene) * figures.size());
+		if (other.genes != NULL) {
+			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
+		}
 		this->evaluation = other.evaluation;
 	}
 	return *this;
@@ -182,7 +191,7 @@ void CutUnit::Evaluate() {
 }
 
 bool CutUnit::sortFunction(CutUnit left, CutUnit right) {
-	if (left.evaluation > right.evaluation) {
+	if (left.evaluation < right.evaluation) {
 		return true;
 	}
 	else {

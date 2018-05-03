@@ -13,8 +13,8 @@ private:
 	static float lineWidth;
 	const float horizontalMutation = 1.0f;
 
-	CutGene * genes;
-	float evaluation;
+	CutGene * genes = NULL;
+	float evaluation = 0;;
 
 public:
 	CutUnit();

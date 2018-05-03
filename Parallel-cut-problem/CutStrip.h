@@ -14,6 +14,8 @@ private:
 public:
 	Point * positionsOfFigures;
 
+	CutStrip();
+
 	CutStrip(std::vector<Figure2D> figures, CutGene genes[], float width);
 
 	~CutStrip();

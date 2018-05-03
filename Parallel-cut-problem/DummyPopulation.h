@@ -20,6 +20,8 @@ public:
 		newMutateUnits = 10;
 		newCrossingoverUnits = 10;
 		CutUnit::SetLineWidth(2.1);
+		units = std::vector<CutUnit>(0);
+		newUnits = std::vector<CutUnit>(0);
 		for (int i = 0; i < 4; i++) {
 			CutUnit::AddFigure(Figure2D());
 		}

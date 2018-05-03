@@ -1,6 +1,12 @@
 #pragma once
 #include "CutStrip.h"
 
+CutStrip::CutStrip() {
+	figures = std::vector<Figure2D>();
+	genes = NULL;
+	width = -1;
+}
+
 CutStrip::CutStrip(std::vector<Figure2D> figures, CutGene genes[], float width) {
 	this->figures = figures;
 	this->genes = genes;
