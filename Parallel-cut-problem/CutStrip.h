@@ -3,6 +3,7 @@
 #include <vector>
 #include "Figure2D.h"
 #include "Position.cpp"
+#include <string>
 
 class CutStrip {
 private:
@@ -30,4 +31,6 @@ public:
 	int * SortOrderOfGenes(CutGene genes[], int size);
 
 	Point * GetResultPositions();
+
+	std::string PrintPositionsOfFigures();
 };

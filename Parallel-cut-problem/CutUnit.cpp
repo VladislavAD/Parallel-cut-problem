@@ -199,6 +199,14 @@ bool CutUnit::sortFunction(CutUnit left, CutUnit right) {
 	}
 }
 
+std::string CutUnit::PrintFigures() {
+	std::string figuresString = "";
+	figuresString += std::to_string(figures.size()) + '\n';
+	for (int i = 0; i < figures.size(); i++) {
+		figuresString += figures[i].PrintFigure() + '\n';
+	}
+}
+
 /*static void fillFigures(std::list<Figure2D> newFigures) {
 while (newFigures.front) {
 

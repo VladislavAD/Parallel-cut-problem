@@ -6,6 +6,7 @@
 #include <list>
 #include <algorithm>
 #include <vector>
+#include <string>
 
 class CutUnit {
 private:
@@ -64,6 +65,8 @@ public:
 	void Evaluate();
 
 	static bool sortFunction(CutUnit left, CutUnit right);
+
+	static std::string PrintFigures();
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {

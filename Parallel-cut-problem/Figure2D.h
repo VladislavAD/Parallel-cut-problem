@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Point.cpp"
 
 class Figure2D {
@@ -110,5 +111,13 @@ public:
 			vertexes[i].Rotate(angleDegree);
 		}
 		CalculateMinimumAndMaximum();
+	}
+
+	std::string PrintFigure() {
+		std::string stringFigure = "";
+		stringFigure += std::to_string(vertexes.size()) + '\n';
+		for (int i = 0; i < vertexes.size(); i++) {
+			stringFigure += std::to_string(vertexes[i].x) + " " + std::to_string(vertexes[i].y) + '\n';
+		}
 	}
 };
