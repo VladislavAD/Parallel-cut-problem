@@ -1,3 +1,4 @@
+#pragma once
 #include "Point.cpp"
 
 class Position : public Point {

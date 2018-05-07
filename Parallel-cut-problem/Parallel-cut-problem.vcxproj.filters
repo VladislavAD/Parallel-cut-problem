@@ -30,22 +30,34 @@
     <ClCompile Include="Position.cpp">
       <Filter>Исходные файлы\Utility classes</Filter>
     </ClCompile>
-    <ClCompile Include="CutUnit.h">
+    <ClCompile Include="CutGene.cpp">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="CutStrip.cpp">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClCompile>
     <ClCompile Include="CutGene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
+    <ClCompile Include="CutUnit.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
+    <ClCompile Include="CutUnit.cpp">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IUnit.h">
-      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    <ClInclude Include="CutStrip.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DummyPopulation.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Figure2D.h">
-      <Filter>Исходные файлы\Genetic algorithms</Filter>
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="CutStrip.h">
-      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    <ClInclude Include="IUnit.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

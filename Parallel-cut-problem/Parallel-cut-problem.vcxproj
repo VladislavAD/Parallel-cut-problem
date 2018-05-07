@@ -80,7 +80,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
@@ -115,6 +115,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CutGene.cpp" />
+    <ClCompile Include="CutStrip.cpp" />
+    <ClCompile Include="CutUnit.cpp" />
     <ClCompile Include="CutUnit.h" />
     <ClCompile Include="CutGene.h" />
     <ClCompile Include="main.cpp" />
@@ -123,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CutStrip.h" />
+    <ClInclude Include="DummyPopulation.h" />
     <ClInclude Include="Figure2D.h" />
     <ClInclude Include="IUnit.h" />
   </ItemGroup>

@@ -1,95 +1,69 @@
+#pragma once
 #include "IUnit.h"
 #include "CutGene.h"
+#include "CutStrip.h"
 #include "Figure2D.h"
 #include <list>
 #include <algorithm>
 #include <vector>
 
-class CutUnit : public IUnit {
+class CutUnit {
 private:
 	static std::vector<Figure2D> figures;
 	static float lineWidth;
 	const float horizontalMutation = 1.0f;
 
-	CutGene * genes;
-	int genesCount;
-	float evaluation;
+	CutGene * genes = NULL;
+	float evaluation = 0;;
 
 public:
+	CutUnit();
+
+	~CutUnit();
+
+	CutUnit(const CutUnit& other);
+
+	CutUnit & operator=(const CutUnit& other);
 
 	///<summary>
 	/// Забирает элемент с памятью
 	///</summary>
-	static void AddFigure(Figure2D newFigure) {
-		figures.push_back(newFigure);
-	}
+	static void AddFigure(Figure2D newFigure);
 
 	///<summary>
 	/// Задать ширину полосы раскроя
 	///</summary>
-	static void SetLineWidth(float newLineWidth) {
-		lineWidth = newLineWidth;
-	}
+	static void SetLineWidth(float newLineWidth);
 
 	///<summary>
 	/// Инициализация генов
 	///</summary>
-	void InitializeGenes() {
-		if (figures.size == 0) {
-			return;
-		}
-		genes = new CutGene[figures.size];
+	void InitializeGenes();
 
-		// Создадим вектор с порядком и случайно замешаем его
-		std::vector<int> randomOrderNumbers = std::vector<int>();
-		for (int i = 0; i < figures.size; i++) {
-			randomOrderNumbers.push_back(i);
-		}
-		std::random_shuffle(randomOrderNumbers.begin, randomOrderNumbers.end);
+	virtual int GetGenesCount();
 
-		for (int i = 0; i < figures.size; i++) {
-			float positionX = (rand() % ((int)lineWidth * 1000)) / 1000.0f;
-			float rotation = (rand() % (360 * 100)) / 100.0f;
-			int order = randomOrderNumbers.back;
-			genes[i] = CutGene(positionX, rotation, order);
-			randomOrderNumbers.pop_back();
-		}
-	}
+	virtual void MutateGene(int number);
 
-	int GetGenesCount() {
-		return figures.size;
-	}
+	virtual void MutateGene();
 
-	void MutateGene(int number) {
-		int randomMutationType = rand() % 3;
-		switch (randomMutationType)
-		{
-			// Первый тип мутации - сдвиг по горизонтали
-		case 0: {
-			genes[number].positionX += -horizontalMutation / 2.0f + (rand() % (int)(horizontalMutation * 1000)) / 1000.0f;
-			break;
-		}
-			// Второй тип мутации - поворот
-		case 1: {
-			genes[number].rotation += rand() % 360000 / 1000.0f;
-			break;
-		}
-			// Третий тип мутации - изменение порядка, ген меняется порядком с другим геном
-		case 2: {
-			int order = genes[number].order;
-			int swapWith = rand() % figures.size;
-			genes[number].order = genes[swapWith].order;
-			genes[swapWith].order = order;
-			break;
-		}
+	virtual void * ExtractGene(int geneNumber);
 
-		default:
-			break;
-		}
-	}
+	//IUnit CrossingoverWithUnit(IUnit unit) {
+	//	CutUnit newUnit = CutUnit();
+	//	int exchangeGeneNumber = rand() % figures.size;
+	//	CutGene exchangeGene = static_cast<CutGene>(unit.ExtractGene(exchangeGeneNumber));
+	//}
 
-	IUnit CrossingoverWithUnit(IUnit unit) {
-	}
+	/// <summary>
+	/// Костыльсинговер, берем ген из особи в параметре и создаём новый ген себя с геном второй особи
+	/// </summary>
+	CutUnit DummyCrossingover(CutUnit unit);
+
+	virtual float GetEvaluation();
+
+	void Evaluate();
+
+	static bool sortFunction(CutUnit left, CutUnit right);
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {

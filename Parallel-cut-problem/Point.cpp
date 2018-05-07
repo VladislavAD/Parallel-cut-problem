@@ -1,4 +1,5 @@
-#include <math.h>
+#pragma once
+#include <cmath>
 
 class Point {
 private:
@@ -16,6 +17,7 @@ public:
 	Point Add(Point second) {
 		this->x += second.x;
 		this->y += second.y;
+		return * this;
 	}
 
 	void Rotate(float degreeAngle) {

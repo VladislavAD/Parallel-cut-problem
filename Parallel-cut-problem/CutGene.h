@@ -1,6 +1,6 @@
-#include <list>
-#include "Point.cpp"
-#include "Position.cpp"
+#pragma once
+//#ifndef CutGene_H
+//#define CutGene_H
 
 class CutGene {
 public:
@@ -8,20 +8,18 @@ public:
 	float rotation;
 	int order;
 
-	CutGene() {}
+	CutGene();
 
-	CutGene(float positionX, float rotation, int order) {
-		this->positionX = positionX;
-		this->rotation = rotation;
-		this->order = order;
-	}
+	CutGene(float positionX, float rotation, int order);
 
-	CutGene& operator=(const CutGene& obj) {
+	/*CutGene& operator=(const CutGene& obj) {
 		if (this != &obj) {
 			this->positionX = obj.positionX;
 			this->rotation = obj.rotation;
 			this->order = obj.order;
 		}
 		return *this;
-	}
+	}*/
 };
+
+//#endif // CutGene_H
