@@ -16,6 +16,7 @@ private:
 
 	CutGene * genes = NULL;
 	float evaluation = 0;;
+	std::string outputPositions;
 
 public:
 	CutUnit();
@@ -67,6 +68,8 @@ public:
 	static bool sortFunction(CutUnit left, CutUnit right);
 
 	static std::string PrintFigures();
+
+	virtual std::string GetPositions();
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {

@@ -2,6 +2,7 @@
 #include "CutUnit.h"
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 class DummyPopulation {
 private:
@@ -55,6 +56,8 @@ public:
 	}
 
 	void Sort() {
+		std::string output = "";
+		output = CutUnit::PrintFigures() + std::to_string(units.size()) + '\n';
 		units.insert(units.end(), newUnits.begin(), newUnits.end());
 		for (int i = 0; i < units.size(); i++) {
 			units[i].Evaluate();
@@ -66,6 +69,15 @@ public:
 		{
 			units.pop_back();
 		}
+
+		for (int i = 0; i < units.size(); i++) {
+			output += units[i].GetPositions();
+		}
+
+		// Эта штука перезаписывает файл
+		std::ofstream out("output.txt");
+		out << output;
+		out.close();
 	}
 
 	void Crossingover() {
@@ -83,5 +95,9 @@ public:
 			return true;
 		}
 		return false;
+	}
+
+	void PrintPopulation() {
+
 	}
 };

@@ -187,6 +187,7 @@ float CutUnit::GetEvaluation() {
 void CutUnit::Evaluate() {
 	CutStrip cutStrip = CutStrip(figures, genes, lineWidth);
 	evaluation = cutStrip.UnitEvaluation();
+	outputPositions = cutStrip.PrintPositionsOfFigures();
 	//delete &cutStrip;
 }
 
@@ -203,8 +204,13 @@ std::string CutUnit::PrintFigures() {
 	std::string figuresString = "";
 	figuresString += std::to_string(figures.size()) + '\n';
 	for (int i = 0; i < figures.size(); i++) {
-		figuresString += figures[i].PrintFigure() + '\n';
+		figuresString += figures[i].PrintFigure();
 	}
+	return figuresString;
+}
+
+std::string CutUnit::GetPositions() {
+	return outputPositions;
 }
 
 /*static void fillFigures(std::list<Figure2D> newFigures) {

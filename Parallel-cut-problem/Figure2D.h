@@ -119,5 +119,6 @@ public:
 		for (int i = 0; i < vertexes.size(); i++) {
 			stringFigure += std::to_string(vertexes[i].x) + " " + std::to_string(vertexes[i].y) + '\n';
 		}
+		return stringFigure;
 	}
 };
