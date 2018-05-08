@@ -128,7 +128,9 @@
     <ClInclude Include="CutStrip.h" />
     <ClInclude Include="DummyPopulation.h" />
     <ClInclude Include="Figure2D.h" />
+    <ClInclude Include="IPopulation.h" />
     <ClInclude Include="IUnit.h" />
+    <ClInclude Include="MpiPopulationController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
