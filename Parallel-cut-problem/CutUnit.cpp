@@ -152,11 +152,25 @@ void * CutUnit::ExtractGene(int geneNumber) {
 	return NULL;
 }
 
-//IUnit CrossingoverWithUnit(IUnit unit) {
-//	CutUnit newUnit = CutUnit();
-//	int exchangeGeneNumber = rand() % figures.size;
-//	CutGene exchangeGene = static_cast<CutGene>(unit.ExtractGene(exchangeGeneNumber));
-//}
+IUnit CutUnit::CrossingoverWithUnit(IUnit unit) {
+	CutUnit * castUnit = dynamic_cast<CutUnit*>(&unit);
+	int exchangeGeneNumber = rand() % figures.size();
+	CutUnit newCutUnit = *this;
+	int oldOrder = this->genes[exchangeGeneNumber].order;
+	int newOrder = castUnit->genes[exchangeGeneNumber].order;
+
+	// ћен€ем пор€док у гена с таким же пор€дком, какой будет новый
+	for (int i = 0; i < figures.size(); i++) {
+		if (this->genes[i].order == newOrder) {
+			newCutUnit.genes[i].order = oldOrder;
+			break;
+		}
+	}
+
+	newCutUnit.genes[exchangeGeneNumber] = castUnit->genes[exchangeGeneNumber];
+
+	return newCutUnit;
+}
 
 /// <summary>
 ///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи

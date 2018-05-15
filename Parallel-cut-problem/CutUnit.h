@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 
-class CutUnit {
+class CutUnit : IUnit {
 private:
 	static std::vector<Figure2D> figures;
 	static float lineWidth;
@@ -48,11 +48,7 @@ public:
 
 	virtual void * ExtractGene(int geneNumber);
 
-	//IUnit CrossingoverWithUnit(IUnit unit) {
-	//	CutUnit newUnit = CutUnit();
-	//	int exchangeGeneNumber = rand() % figures.size;
-	//	CutGene exchangeGene = static_cast<CutGene>(unit.ExtractGene(exchangeGeneNumber));
-	//}
+	IUnit CrossingoverWithUnit(IUnit unit) {}
 
 	/// <summary>
 	///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи
