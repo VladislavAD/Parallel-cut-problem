@@ -10,7 +10,8 @@ public:
 	virtual BaseUnit * CrossingoverWithUnit(BaseUnit * unit) { return unit; }
 	virtual void * ExtractGene(int geneNumber) { return nullptr; }
 	virtual void Evaluate() {}
-	virtual void Delete() {};
+	virtual void Delete() {}
+	virtual BaseUnit * Copy() { return nullptr; }
 
 	static bool sortFunction(BaseUnit * left, BaseUnit * right) {
 		if (left->GetEvaluation() < right->GetEvaluation()) {

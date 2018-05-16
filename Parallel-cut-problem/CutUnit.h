@@ -18,12 +18,7 @@ private:
 
 public:
 	CutUnit();
-
 	~CutUnit();
-
-	CutUnit(const CutUnit& other);
-
-	CutUnit & operator=(const CutUnit& other);
 
 	///<summary>
 	/// Забирает элемент с памятью
@@ -43,13 +38,9 @@ public:
 	void InitializeGenes();
 
 	virtual int GetGenesCount();
-
 	virtual void MutateGene(int number);
-
 	virtual void MutateGene();
-
 	virtual void * ExtractGene(int geneNumber);
-
 	BaseUnit CrossingoverWithUnit(BaseUnit unit);
 
 	/// <summary>
@@ -58,14 +49,7 @@ public:
 	CutUnit DummyCrossingover(CutUnit unit);
 
 	virtual float GetEvaluation();
-
 	void Evaluate();
-
 	void Delete();
-
-	/*static void fillFigures(std::list<Figure2D> newFigures) {
-		while (newFigures.front) {
-
-		}
-	}*/
+	virtual BaseUnit * Copy();
 };

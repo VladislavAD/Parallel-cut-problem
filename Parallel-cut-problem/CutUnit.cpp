@@ -12,33 +12,6 @@ CutUnit::~CutUnit() {
 	genes = NULL;
 }
 
-CutUnit::CutUnit(const CutUnit& other) {
-	if (this != &other) {
-		if (genes != NULL) {
-			delete[] genes;
-			genes = NULL;
-		}
-		genes = new CutGene[this->figures.size()];
-		if (other.genes != NULL) {
-			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-		}
-		this->evaluation = other.evaluation;
-	}
-}
-
-CutUnit & CutUnit::operator=(const CutUnit& other) {
-	if (this != &other) {
-		delete[] genes;
-		genes = NULL;
-		genes = new CutGene[this->figures.size()];
-		if (other.genes != NULL) {
-			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-		}
-		this->evaluation = other.evaluation;
-	}
-	return *this;
-}
-
 ///<summary>
 /// Забирает элемент с памятью
 ///</summary>
@@ -221,6 +194,18 @@ void CutUnit::Evaluate() {
 
 void CutUnit::Delete() {
 	this->~CutUnit();
+}
+
+BaseUnit * CutUnit::Copy()
+{
+	CutUnit * copyUnit = new CutUnit();
+	for (int i = 0; i < figures.size(); i++)
+	{
+		copyUnit->genes[i].order = this->genes[i].order;
+		copyUnit->genes[i].positionX = this->genes[i].positionX;
+		copyUnit->genes[i].rotation = this->genes[i].rotation;
+	}
+	return copyUnit;
 }
 
 /*static void fillFigures(std::list<Figure2D> newFigures) {

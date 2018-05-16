@@ -28,7 +28,7 @@ bool DefaultPopulation::Step() {
 void DefaultPopulation::Mutate() {
 	for (int i = 0; i < settingsHolder->newMutateUnits; i++) {
 		int randomUnit = rand() % units.size();
-		BaseUnit * newMutateUnit = units[randomUnit];
+		BaseUnit * newMutateUnit = units[randomUnit]->Copy();
 		int randomGene = rand() % newMutateUnit->GetGenesCount();
 		newMutateUnit->MutateGene(randomGene);
 		newUnits.push_back(newMutateUnit);
@@ -36,7 +36,13 @@ void DefaultPopulation::Mutate() {
 }
 
 void DefaultPopulation::Sort() {
-	units.insert(units.end(), newUnits.begin(), newUnits.end());
+	//units.insert(units.end(), newUnits.begin(), newUnits.end());
+	for (int i = 0; i < newUnits.size(); i++)
+	{
+		units.push_back(newUnits[i]->Copy());
+		newUnits[i]->Delete();
+	}
+	newUnits.clear();
 	for (int i = 0; i < units.size(); i++) {
 		units[i]->Evaluate();
 	}
@@ -48,13 +54,14 @@ void DefaultPopulation::Sort() {
 		units.back()->Delete();
 		units.pop_back();
 	}
+
 }
 
 void DefaultPopulation::Crossingover() {
 	for (int i = 0; i < settingsHolder->newCrossingoverUnits; i++) {
 		int firstRandomUnit = rand() % units.size();
 		int secondRandomUnit = rand() % units.size();
-		BaseUnit * newCrossingoverUnit = units[firstRandomUnit];
+		BaseUnit * newCrossingoverUnit = units[firstRandomUnit]->Copy();
 		newCrossingoverUnit->CrossingoverWithUnit(units[secondRandomUnit]);
 		newUnits.push_back(newCrossingoverUnit);
 	}
