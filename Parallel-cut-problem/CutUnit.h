@@ -1,5 +1,5 @@
 #pragma once
-#include "IUnit.h"
+#include "BaseUnit.h"
 #include "CutGene.h"
 #include "CutStrip.h"
 #include "Figure2D.h"
@@ -7,9 +7,9 @@
 #include <algorithm>
 #include <vector>
 
-class CutUnit : IUnit {
+class CutUnit : public BaseUnit {
 private:
-	static std::vector<Figure2D> figures;
+	static std::vector<Figure2D*> figures;
 	static float lineWidth;
 	const float horizontalMutation = 1.0f;
 
@@ -28,12 +28,14 @@ public:
 	///<summary>
 	/// Забирает элемент с памятью
 	///</summary>
-	static void AddFigure(Figure2D newFigure);
+	static void AddFigure(Figure2D * newFigure);
 
 	///<summary>
 	/// Задать ширину полосы раскроя
 	///</summary>
 	static void SetLineWidth(float newLineWidth);
+
+	static void Initialize(Figure2D * figures, int figuresCount, float lineWidth);
 
 	///<summary>
 	/// Инициализация генов
@@ -48,7 +50,7 @@ public:
 
 	virtual void * ExtractGene(int geneNumber);
 
-	IUnit CrossingoverWithUnit(IUnit unit) {}
+	BaseUnit CrossingoverWithUnit(BaseUnit unit);
 
 	/// <summary>
 	/// Костыльсинговер, берем ген из особи в параметре и создаём новый ген себя с геном второй особи
@@ -59,7 +61,7 @@ public:
 
 	void Evaluate();
 
-	static bool sortFunction(CutUnit left, CutUnit right);
+	void Delete();
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {

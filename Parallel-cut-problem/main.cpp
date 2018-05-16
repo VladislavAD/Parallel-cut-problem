@@ -1,8 +1,14 @@
 #pragma once
-#include "DummyPopulation.h"
+#include "DefaultPopulation.h"
+#include "CutSettingsHolder.h"
 
 int main() {
-	DummyPopulation population = DummyPopulation();
+	CutSettingsHolder * settingsHolder = new CutSettingsHolder();
+	for (int i = 0; i < 4; i++)
+	{
+		settingsHolder->figures.push_back(new Figure2D());
+	}
+	DefaultPopulation population = DefaultPopulation(settingsHolder);
 	while (population.Step()) {}
 	return 0;
 }

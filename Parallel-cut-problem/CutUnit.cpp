@@ -4,6 +4,7 @@
 CutUnit::CutUnit() {
 	genes = NULL;
 	evaluation = -1;
+	InitializeGenes();
 }
 
 CutUnit::~CutUnit() {
@@ -41,7 +42,7 @@ CutUnit & CutUnit::operator=(const CutUnit& other) {
 ///<summary>
 /// Забирает элемент с памятью
 ///</summary>
-void CutUnit::AddFigure(Figure2D newFigure) {
+void CutUnit::AddFigure(Figure2D * newFigure) {
 	figures.push_back(newFigure);
 }
 
@@ -50,6 +51,14 @@ void CutUnit::AddFigure(Figure2D newFigure) {
 ///</summary>
 void CutUnit::SetLineWidth(float newLineWidth) {
 	lineWidth = newLineWidth;
+}
+
+void CutUnit::Initialize(Figure2D * figures, int figuresCount, float lineWidth)
+{
+	for (int i = 0; i < figuresCount; i++) {
+		AddFigure(&figures[i]);
+	}
+	SetLineWidth(lineWidth);
 }
 
 ///<summary>
@@ -75,9 +84,9 @@ void CutUnit::InitializeGenes() {
 			float rotation = (rand() % (360 * 100)) / 100.0f;
 			int order = randomOrderNumbers.back();
 			genes[i] = CutGene(positionX, rotation, order);
-			Figure2D testFigure = figures[i];
-			testFigure.RotateFigure(rotation);
-			newGeneFitLine = testFigure.FitLine(lineWidth, positionX);
+			Figure2D * testFigure = figures[i];
+			testFigure->RotateFigure(rotation);
+			newGeneFitLine = testFigure->FitLine(lineWidth, positionX);
 		}
 		randomOrderNumbers.pop_back();
 	}
@@ -152,7 +161,7 @@ void * CutUnit::ExtractGene(int geneNumber) {
 	return NULL;
 }
 
-IUnit CutUnit::CrossingoverWithUnit(IUnit unit) {
+BaseUnit CutUnit::CrossingoverWithUnit(BaseUnit unit) {
 	CutUnit * castUnit = dynamic_cast<CutUnit*>(&unit);
 	int exchangeGeneNumber = rand() % figures.size();
 	CutUnit newCutUnit = *this;
@@ -199,18 +208,19 @@ float CutUnit::GetEvaluation() {
 }
 
 void CutUnit::Evaluate() {
-	CutStrip cutStrip = CutStrip(figures, genes, lineWidth);
+	std::vector<Figure2D> bufferFigures = std::vector<Figure2D>(0);
+	for (int i = 0; i < figures.size(); i++)
+	{
+		bufferFigures.push_back(*figures[i]);
+	}
+	CutStrip cutStrip = CutStrip(bufferFigures, genes, lineWidth);
 	evaluation = cutStrip.UnitEvaluation();
+	bufferFigures.clear();
 	//delete &cutStrip;
 }
 
-bool CutUnit::sortFunction(CutUnit left, CutUnit right) {
-	if (left.evaluation < right.evaluation) {
-		return true;
-	}
-	else {
-		return false;
-	}
+void CutUnit::Delete() {
+	this->~CutUnit();
 }
 
 /*static void fillFigures(std::list<Figure2D> newFigures) {
@@ -219,5 +229,5 @@ while (newFigures.front) {
 }
 }*/
 
-std::vector<Figure2D> CutUnit::figures;
+std::vector<Figure2D*> CutUnit::figures;
 float CutUnit::lineWidth;

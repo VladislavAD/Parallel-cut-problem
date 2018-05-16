@@ -116,19 +116,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CutGene.cpp" />
+    <ClCompile Include="CutSettingsHolder.cpp" />
     <ClCompile Include="CutStrip.cpp" />
     <ClCompile Include="CutUnit.cpp" />
     <ClCompile Include="CutUnit.h" />
     <ClCompile Include="CutGene.h" />
+    <ClCompile Include="DefaultPopulation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Position.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasePopulation.h" />
+    <ClInclude Include="BaseSettingsHolder.h" />
+    <ClInclude Include="CutSettingsHolder.h" />
     <ClInclude Include="CutStrip.h" />
-    <ClInclude Include="DummyPopulation.h" />
+    <ClInclude Include="DefaultPopulation.h" />
     <ClInclude Include="Figure2D.h" />
-    <ClInclude Include="IUnit.h" />
+    <ClInclude Include="BaseUnit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
