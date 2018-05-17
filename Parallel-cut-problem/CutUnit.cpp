@@ -57,9 +57,9 @@ void CutUnit::InitializeGenes() {
 			float rotation = (rand() % (360 * 100)) / 100.0f;
 			int order = randomOrderNumbers.back();
 			genes[i] = CutGene(positionX, rotation, order);
-			Figure2D * testFigure = figures[i];
-			testFigure->RotateFigure(rotation);
-			newGeneFitLine = testFigure->FitLine(lineWidth, positionX);
+			Figure2D testFigure = figures[i]->Copy();
+			testFigure.RotateFigure(rotation);
+			newGeneFitLine = testFigure.FitLine(lineWidth, positionX);
 		}
 		randomOrderNumbers.pop_back();
 	}
@@ -184,12 +184,18 @@ void CutUnit::Evaluate() {
 	std::vector<Figure2D> bufferFigures = std::vector<Figure2D>(0);
 	for (int i = 0; i < figures.size(); i++)
 	{
-		bufferFigures.push_back(*figures[i]);
+		bufferFigures.push_back(figures[i]->Copy());
 	}
-	CutStrip cutStrip = CutStrip(bufferFigures, genes, lineWidth);
-	evaluation = cutStrip.UnitEvaluation();
+	CutStrip * cutStrip = new CutStrip(bufferFigures, genes, lineWidth);
+	evaluation = cutStrip->UnitEvaluation();
+	for (int i = 0; i < figures.size(); i++)
+	{
+		Figure2D * figureToDelete = &bufferFigures.back();
+		//delete figureToDelete;
+		figureToDelete->~Figure2D();
+	}
 	bufferFigures.clear();
-	//delete &cutStrip;
+	delete cutStrip;
 }
 
 void CutUnit::Delete() {

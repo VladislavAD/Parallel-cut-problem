@@ -4,9 +4,9 @@
 
 int main() {
 	CutSettingsHolder * settingsHolder = new CutSettingsHolder();
-	settingsHolder->unitsSize = 10;
-	settingsHolder->newMutateUnits = 2;
-	settingsHolder->newCrossingoverUnits = 2;
+	settingsHolder->unitsSize = 30;
+	settingsHolder->newMutateUnits = 3;
+	settingsHolder->newCrossingoverUnits = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		settingsHolder->figures.push_back(new Figure2D());

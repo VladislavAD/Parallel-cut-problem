@@ -12,14 +12,9 @@ protected:
 
 public:
 	BasePopulation(BaseSettingsHolder * settingsHolder) {}
-
 	bool Step() {}
-
 	void Mutate() {}
-
 	void Sort() {}
-
 	void Crossingover() {}
-
 	bool CheckStop() {}
 };

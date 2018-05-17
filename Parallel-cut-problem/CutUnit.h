@@ -9,12 +9,12 @@
 
 class CutUnit : public BaseUnit {
 private:
+	float evaluation = 0;
 	static std::vector<Figure2D*> figures;
 	static float lineWidth;
 	const float horizontalMutation = 1.0f;
 
 	CutGene * genes = NULL;
-	float evaluation = 0;;
 
 public:
 	CutUnit();

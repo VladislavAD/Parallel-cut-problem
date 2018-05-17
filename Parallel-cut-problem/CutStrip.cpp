@@ -29,6 +29,10 @@ CutStrip & CutStrip::operator=(const CutStrip& other) {
 }
 
 CutStrip::~CutStrip() {
+	for (int i = 0; i < figures.size(); i++)
+	{
+		figures[i].~Figure2D();
+	}
 	figures.clear();
 	delete[] positionsOfFigures;
 }

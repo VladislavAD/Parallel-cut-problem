@@ -9,14 +9,9 @@
 class DefaultPopulation : BasePopulation {
 public:
 	DefaultPopulation(BaseSettingsHolder * settingsHolder);
-
 	bool Step();
-
 	void Mutate();
-
 	void Sort();
-
 	void Crossingover();
-
 	bool CheckStop();
 };

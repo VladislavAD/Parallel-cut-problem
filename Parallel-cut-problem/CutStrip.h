@@ -3,6 +3,8 @@
 #include <vector>
 #include "Figure2D.h"
 #include "Position.cpp"
+#include <memory>
+#include <algorithm>
 
 class CutStrip {
 private:

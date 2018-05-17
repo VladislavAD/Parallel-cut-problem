@@ -55,6 +55,11 @@ public:
 		return *this;
 	}
 
+	Figure2D Copy() {
+		Figure2D copyFigure = Figure2D(this->vertexes);
+		return copyFigure;
+	}
+
 	bool FitLine(float lineWidth, float x) {
 		if (maximum.x + x < lineWidth && minimum.x + x > 0) {
 			return true;
