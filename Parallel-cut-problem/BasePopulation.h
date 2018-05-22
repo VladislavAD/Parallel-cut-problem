@@ -17,6 +17,6 @@ public:
 	void Sort() {}
 	void Crossingover() {}
 	bool CheckStop() {}
-	void MpiSendUnit() {}
-	void MpiReceiveUnit() {}
+	void MpiSendUnit(int unitNumber, int destination, MPI_Comm communicator) {}
+	void MpiReceiveUnit(int source, MPI_Comm communicator) {}
 };

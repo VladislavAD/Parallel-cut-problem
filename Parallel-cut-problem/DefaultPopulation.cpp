@@ -14,7 +14,6 @@ DefaultPopulation::DefaultPopulation(BaseSettingsHolder * settingsHolder) : Base
 
 bool DefaultPopulation::Step() {
 	if (!CheckStop()) {
-		units[0]->MpiSend();
 		Sort();
 		std::cout << units[0]->GetEvaluation() << std::endl;
 		Mutate();
@@ -73,4 +72,18 @@ bool DefaultPopulation::CheckStop() {
 		return true;
 	}
 	return false;
+}
+
+void DefaultPopulation::MpiSendUnit(int unitNumber, int destination, MPI_Comm communicator) {
+	units[unitNumber]->MpiSend(destination, communicator);
+}
+
+/// <summary>
+/// Добавляет полученный юнит в конец
+/// </summary>
+void DefaultPopulation::MpiReceiveUnit(int source, MPI_Comm communicator)
+{
+	BaseUnit * receivedUnit = settingsHolder->CreateUnit();
+	receivedUnit->MpiReceive(source, communicator);
+	units.push_back(receivedUnit);
 }
