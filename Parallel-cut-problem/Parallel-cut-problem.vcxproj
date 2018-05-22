@@ -147,6 +147,7 @@
     <ClInclude Include="DefaultPopulation.h" />
     <ClInclude Include="Figure2D.h" />
     <ClInclude Include="BaseUnit.h" />
+    <ClInclude Include="MpiFriendly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

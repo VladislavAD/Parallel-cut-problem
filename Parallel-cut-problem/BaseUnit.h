@@ -1,6 +1,7 @@
 #pragma once
+#include "MpiFriendly.h"
 
-class BaseUnit {
+class BaseUnit : public MpiFriendly {
 public:
 	BaseUnit() {};
 	~BaseUnit() {};
@@ -12,6 +13,7 @@ public:
 	virtual void Evaluate() {}
 	virtual void Delete() {}
 	virtual BaseUnit * Copy() { return nullptr; }
+	//virtual void MpiSend() {};
 
 	static bool sortFunction(BaseUnit * left, BaseUnit * right) {
 		if (left->GetEvaluation() < right->GetEvaluation()) {

@@ -3,7 +3,7 @@
 #include "BaseSettingsHolder.h"
 #include <vector>
 
-class BasePopulation {
+class BasePopulation : public MpiFriendly {
 protected:
 	BaseSettingsHolder * settingsHolder;
 	std::vector<BaseUnit*> units;
@@ -17,4 +17,6 @@ public:
 	void Sort() {}
 	void Crossingover() {}
 	bool CheckStop() {}
+	void MpiSendUnit() {}
+	void MpiReceiveUnit() {}
 };

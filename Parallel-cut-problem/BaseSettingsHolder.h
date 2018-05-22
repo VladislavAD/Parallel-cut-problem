@@ -9,4 +9,6 @@ public:
 	int newCrossingoverUnits = 10;
 	virtual void Initialize() {};
 	virtual BaseUnit * CreateUnit() { return nullptr; }
+	virtual void MpiSend() {};
+	virtual void MpiReceive() {};
 };

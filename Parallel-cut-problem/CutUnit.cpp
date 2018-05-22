@@ -214,6 +214,55 @@ BaseUnit * CutUnit::Copy()
 	return copyUnit;
 }
 
+void CutUnit::MpiSend(int destination, MPI_Comm communicator) {
+	/*CutGene value;
+	MPI_Datatype cutGeneDatatype;
+	int blockLengths[3] = { sizeof(float), sizeof(float), sizeof(int) };
+	MPI_Aint displacements[3] = { 0, &value.positionX, sizeof(float) * 2 };
+	MPI_Datatype datatypes[3] = { MPI_FLOAT, MPI_FLOAT, MPI_INT };
+	MPI_Type_struct(3, blockLengths, displacements, datatypes, &cutGeneDatatype);
+	MPI_Type_commit(&cutGeneDatatype);
+	std::printf("CutUnit mpi send to %i\n", destination);
+	MPI_Type_free(&cutGeneDatatype);*/
+	float * positionXBuffer = new float[figures.size()];
+	float * rotationBuffer = new float[figures.size()];
+	int * orderBuffer = new int[figures.size()];
+	for (int i = 0; i < figures.size(); i++) {
+		positionXBuffer[i] = genes[i].positionX;
+		rotationBuffer[i] = genes[i].rotation;
+		orderBuffer[i] = genes[i].order;
+	}
+	MPI_Send(positionXBuffer, figures.size(), MPI_FLOAT, destination, 0, communicator);
+	MPI_Send(rotationBuffer, figures.size(), MPI_FLOAT, destination, 0, communicator);
+	MPI_Send(orderBuffer, figures.size(), MPI_INT, destination, 0, communicator);
+	delete[] positionXBuffer;
+	delete[] rotationBuffer;
+	delete[] orderBuffer;
+}
+
+/// <summary>
+/// Не стал мудрить, сделал по-простому
+/// </summary>
+void CutUnit::MpiReceive(int source, MPI_Comm communicator) {
+	//MPI_Send()
+	float * positionXBuffer = new float[figures.size()];
+	float * rotationBuffer = new float[figures.size()];
+	int * orderBuffer = new int[figures.size()];
+	MPI_Status status;
+	MPI_Recv(positionXBuffer, figures.size(), MPI_FLOAT, source, 0, communicator, &status);
+	MPI_Recv(rotationBuffer, figures.size(), MPI_FLOAT, source, 0, communicator, &status);
+	MPI_Recv(orderBuffer, figures.size(), MPI_INT, source, 0, communicator, &status);
+	for (int i = 0; i < figures.size(); i++) {
+		genes[i].positionX = positionXBuffer[i];
+		genes[i].rotation = rotationBuffer[i];
+		genes[i].order = orderBuffer[i];
+	}
+	delete[] positionXBuffer;
+	delete[] rotationBuffer;
+	delete[] orderBuffer;
+	std::printf("CutUnit mpi receive to %i\n", source);
+}
+
 /*static void fillFigures(std::list<Figure2D> newFigures) {
 while (newFigures.front) {
 

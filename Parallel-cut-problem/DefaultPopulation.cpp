@@ -14,6 +14,7 @@ DefaultPopulation::DefaultPopulation(BaseSettingsHolder * settingsHolder) : Base
 
 bool DefaultPopulation::Step() {
 	if (!CheckStop()) {
+		units[0]->MpiSend();
 		Sort();
 		std::cout << units[0]->GetEvaluation() << std::endl;
 		Mutate();

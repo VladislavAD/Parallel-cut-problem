@@ -3,6 +3,7 @@
 #include "CutGene.h"
 #include "CutStrip.h"
 #include "Figure2D.h"
+#include "MpiFriendly.h"
 #include <list>
 #include <algorithm>
 #include <vector>
@@ -42,6 +43,8 @@ public:
 	virtual void MutateGene();
 	virtual void * ExtractGene(int geneNumber);
 	BaseUnit CrossingoverWithUnit(BaseUnit unit);
+	void MpiSend(int destination, MPI_Comm communicator);
+	void MpiReceive(int source, MPI_Comm communicator);
 
 	/// <summary>
 	///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи
