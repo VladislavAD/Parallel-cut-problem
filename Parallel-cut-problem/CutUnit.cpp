@@ -4,6 +4,7 @@
 CutUnit::CutUnit() {
 	genes = NULL;
 	evaluation = -1;
+	InitializeGenes();
 }
 
 CutUnit::~CutUnit() {
@@ -11,37 +12,10 @@ CutUnit::~CutUnit() {
 	genes = NULL;
 }
 
-CutUnit::CutUnit(const CutUnit& other) {
-	if (this != &other) {
-		if (genes != NULL) {
-			delete[] genes;
-			genes = NULL;
-		}
-		genes = new CutGene[this->figures.size()];
-		if (other.genes != NULL) {
-			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-		}
-		this->evaluation = other.evaluation;
-	}
-}
-
-CutUnit & CutUnit::operator=(const CutUnit& other) {
-	if (this != &other) {
-		delete[] genes;
-		genes = NULL;
-		genes = new CutGene[this->figures.size()];
-		if (other.genes != NULL) {
-			memcpy(genes, other.genes, sizeof(CutGene) * figures.size());
-		}
-		this->evaluation = other.evaluation;
-	}
-	return *this;
-}
-
 ///<summary>
 /// Забирает элемент с памятью
 ///</summary>
-void CutUnit::AddFigure(Figure2D newFigure) {
+void CutUnit::AddFigure(Figure2D * newFigure) {
 	figures.push_back(newFigure);
 }
 
@@ -50,6 +24,14 @@ void CutUnit::AddFigure(Figure2D newFigure) {
 ///</summary>
 void CutUnit::SetLineWidth(float newLineWidth) {
 	lineWidth = newLineWidth;
+}
+
+void CutUnit::Initialize(Figure2D * figures, int figuresCount, float lineWidth)
+{
+	for (int i = 0; i < figuresCount; i++) {
+		AddFigure(&figures[i]);
+	}
+	SetLineWidth(lineWidth);
 }
 
 ///<summary>
@@ -75,7 +57,7 @@ void CutUnit::InitializeGenes() {
 			float rotation = (rand() % (360 * 100)) / 100.0f;
 			int order = randomOrderNumbers.back();
 			genes[i] = CutGene(positionX, rotation, order);
-			Figure2D testFigure = figures[i];
+			Figure2D testFigure = figures[i]->Copy();
 			testFigure.RotateFigure(rotation);
 			newGeneFitLine = testFigure.FitLine(lineWidth, positionX);
 		}
@@ -152,11 +134,25 @@ void * CutUnit::ExtractGene(int geneNumber) {
 	return NULL;
 }
 
-//IUnit CrossingoverWithUnit(IUnit unit) {
-//	CutUnit newUnit = CutUnit();
-//	int exchangeGeneNumber = rand() % figures.size;
-//	CutGene exchangeGene = static_cast<CutGene>(unit.ExtractGene(exchangeGeneNumber));
-//}
+BaseUnit CutUnit::CrossingoverWithUnit(BaseUnit unit) {
+	CutUnit * castUnit = dynamic_cast<CutUnit*>(&unit);
+	int exchangeGeneNumber = rand() % figures.size();
+	CutUnit newCutUnit = *this;
+	int oldOrder = this->genes[exchangeGeneNumber].order;
+	int newOrder = castUnit->genes[exchangeGeneNumber].order;
+
+	// Меняем порядок у гена с таким же порядком, какой будет новый
+	for (int i = 0; i < figures.size(); i++) {
+		if (this->genes[i].order == newOrder) {
+			newCutUnit.genes[i].order = oldOrder;
+			break;
+		}
+	}
+
+	newCutUnit.genes[exchangeGeneNumber] = castUnit->genes[exchangeGeneNumber];
+
+	return newCutUnit;
+}
 
 /// <summary>
 /// Костыльсинговер, берем ген из особи в параметре и создаём новый ген себя с геном второй особи
@@ -185,19 +181,86 @@ float CutUnit::GetEvaluation() {
 }
 
 void CutUnit::Evaluate() {
-	CutStrip cutStrip = CutStrip(figures, genes, lineWidth);
-	evaluation = cutStrip.UnitEvaluation();
-	outputPositions = cutStrip.PrintPositionsOfFigures();
-	//delete &cutStrip;
+	std::vector<Figure2D> bufferFigures = std::vector<Figure2D>(0);
+	for (int i = 0; i < figures.size(); i++)
+	{
+		bufferFigures.push_back(figures[i]->Copy());
+	}
+	CutStrip * cutStrip = new CutStrip(bufferFigures, genes, lineWidth);
+	evaluation = cutStrip->UnitEvaluation();
+	for (int i = 0; i < figures.size(); i++)
+	{
+		Figure2D * figureToDelete = &bufferFigures.back();
+		//delete figureToDelete;
+		figureToDelete->~Figure2D();
+	}
+	bufferFigures.clear();
+	delete cutStrip;
 }
 
-bool CutUnit::sortFunction(CutUnit left, CutUnit right) {
-	if (left.evaluation < right.evaluation) {
-		return true;
+void CutUnit::Delete() {
+	this->~CutUnit();
+}
+
+BaseUnit * CutUnit::Copy()
+{
+	CutUnit * copyUnit = new CutUnit();
+	for (int i = 0; i < figures.size(); i++)
+	{
+		copyUnit->genes[i].order = this->genes[i].order;
+		copyUnit->genes[i].positionX = this->genes[i].positionX;
+		copyUnit->genes[i].rotation = this->genes[i].rotation;
 	}
-	else {
-		return false;
+	return copyUnit;
+}
+
+void CutUnit::MpiSend(int destination, MPI_Comm communicator) {
+	/*CutGene value;
+	MPI_Datatype cutGeneDatatype;
+	int blockLengths[3] = { sizeof(float), sizeof(float), sizeof(int) };
+	MPI_Aint displacements[3] = { 0, &value.positionX, sizeof(float) * 2 };
+	MPI_Datatype datatypes[3] = { MPI_FLOAT, MPI_FLOAT, MPI_INT };
+	MPI_Type_struct(3, blockLengths, displacements, datatypes, &cutGeneDatatype);
+	MPI_Type_commit(&cutGeneDatatype);
+	std::printf("CutUnit mpi send to %i\n", destination);
+	MPI_Type_free(&cutGeneDatatype);*/
+	float * positionXBuffer = new float[figures.size()];
+	float * rotationBuffer = new float[figures.size()];
+	int * orderBuffer = new int[figures.size()];
+	for (int i = 0; i < figures.size(); i++) {
+		positionXBuffer[i] = genes[i].positionX;
+		rotationBuffer[i] = genes[i].rotation;
+		orderBuffer[i] = genes[i].order;
 	}
+	MPI_Send(positionXBuffer, figures.size(), MPI_FLOAT, destination, 0, communicator);
+	MPI_Send(rotationBuffer, figures.size(), MPI_FLOAT, destination, 1, communicator);
+	MPI_Send(orderBuffer, figures.size(), MPI_INT, destination, 2, communicator);
+	delete[] positionXBuffer;
+	delete[] rotationBuffer;
+	delete[] orderBuffer;
+}
+
+/// <summary>
+/// Не стал мудрить, сделал по-простому
+/// </summary>
+void CutUnit::MpiReceive(int source, MPI_Comm communicator) {
+	//MPI_Send()
+	float * positionXBuffer = new float[figures.size()];
+	float * rotationBuffer = new float[figures.size()];
+	int * orderBuffer = new int[figures.size()];
+	MPI_Status status;
+	MPI_Recv(positionXBuffer, figures.size(), MPI_FLOAT, source, 0, communicator, &status);
+	MPI_Recv(rotationBuffer, figures.size(), MPI_FLOAT, source, 1, communicator, &status);
+	MPI_Recv(orderBuffer, figures.size(), MPI_INT, source, 2, communicator, &status);
+	for (int i = 0; i < figures.size(); i++) {
+		genes[i].positionX = positionXBuffer[i];
+		genes[i].rotation = rotationBuffer[i];
+		genes[i].order = orderBuffer[i];
+	}
+	delete[] positionXBuffer;
+	delete[] rotationBuffer;
+	delete[] orderBuffer;
+	std::printf("CutUnit mpi receive to %i\n", source);
 }
 
 std::string CutUnit::PrintFigures() {
@@ -213,11 +276,12 @@ std::string CutUnit::GetPositions() {
 	return outputPositions;
 }
 
+
 /*static void fillFigures(std::list<Figure2D> newFigures) {
 while (newFigures.front) {
 
 }
 }*/
 
-std::vector<Figure2D> CutUnit::figures;
+std::vector<Figure2D*> CutUnit::figures;
 float CutUnit::lineWidth;

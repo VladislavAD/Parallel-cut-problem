@@ -2,8 +2,9 @@
 #include <vector>
 #include <string>
 #include "Point.cpp"
+#include "MpiFriendly.h"
 
-class Figure2D {
+class Figure2D : MpiFriendly {
 private:
 
 	std::vector<Point> vertexes;
@@ -56,6 +57,11 @@ public:
 		return *this;
 	}
 
+	Figure2D Copy() {
+		Figure2D copyFigure = Figure2D(this->vertexes);
+		return copyFigure;
+	}
+
 	bool FitLine(float lineWidth, float x) {
 		if (maximum.x + x < lineWidth && minimum.x + x > 0) {
 			return true;
@@ -87,14 +93,14 @@ public:
 
 				startPointFirstLine = Point(first.vertexes[startVertexNumber1]);
 				startPointFirstLine.Add(firstPosition);
-				endPointFirstLine =	Point(first.vertexes[endVertexNumber1]);
+				endPointFirstLine = Point(first.vertexes[endVertexNumber1]);
 				endPointFirstLine.Add(firstPosition);
 				startPointSecondLine = Point(second.vertexes[startVertexNumber2]);
 				startPointSecondLine.Add(secondPosition);
 				endPointSecondLine = Point(second.vertexes[endVertexNumber2]);
 				endPointSecondLine.Add(secondPosition);
 
-				float check = (firstPosition.x - secondPosition.x) * (firstPosition.x - secondPosition.x) + 
+				float check = (firstPosition.x - secondPosition.x) * (firstPosition.x - secondPosition.x) +
 					(firstPosition.y - secondPosition.y) * (firstPosition.y - secondPosition.y);
 
 				if (Point::LineIntersection(startPointFirstLine, endPointFirstLine, startPointSecondLine, endPointSecondLine)) {
@@ -110,6 +116,39 @@ public:
 		{
 			vertexes[i].Rotate(angleDegree);
 		}
+		CalculateMinimumAndMaximum();
+	}
+
+	void MpiSend(int destination, MPI_Comm communicator) {
+		float * pointXBuffer = new float[vertexes.size()];
+		float * pointYBuffer = new float[vertexes.size()];
+		for (int i = 0; i < vertexes.size(); i++) {
+			pointXBuffer[i] = vertexes[i].x;
+			pointYBuffer[i] = vertexes[i].y;
+		}
+		int vertexesCount = vertexes.size();
+		MPI_Send(&vertexesCount, 1, MPI_INT, destination, 0, communicator);
+		MPI_Send(pointXBuffer, vertexes.size(), MPI_FLOAT, destination, 1, communicator);
+		MPI_Send(pointYBuffer, vertexes.size(), MPI_FLOAT, destination, 2, communicator);
+		delete[] pointXBuffer;
+		delete[] pointYBuffer;
+	}
+
+	void MpiReceive(int source, MPI_Comm communicator) {
+		MPI_Status * status;
+		int vertexesCount = 0;
+		MPI_Recv(&vertexesCount, 1, MPI_INT, source, 0, communicator, status);
+		vertexes = std::vector<Point>(vertexesCount);
+		float * pointXBuffer = new float[vertexes.size()];
+		float * pointYBuffer = new float[vertexes.size()];
+		MPI_Recv(pointXBuffer, vertexesCount, MPI_FLOAT, source, 1, communicator, status);
+		MPI_Recv(pointYBuffer, vertexesCount, MPI_FLOAT, source, 2, communicator, status);
+		for (int i = 0; i < vertexes.size(); i++) {
+			vertexes[i].x = pointXBuffer[i];
+			vertexes[i].y = pointYBuffer[i];
+		}
+		delete[] pointXBuffer;
+		delete[] pointYBuffer;
 		CalculateMinimumAndMaximum();
 	}
 

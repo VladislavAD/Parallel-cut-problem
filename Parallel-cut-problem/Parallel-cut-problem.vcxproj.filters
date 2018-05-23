@@ -19,6 +19,9 @@
     <Filter Include="Исходные файлы\Genetic algorithms">
       <UniqueIdentifier>{e7dd8c03-0b1c-42d0-9262-fbb6dfcfb3a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Settings">
+      <UniqueIdentifier>{c9ec06e1-22d1-40b7-b98b-1eb5efb6e2b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,18 +48,36 @@
     <ClCompile Include="CutUnit.cpp">
       <Filter>Исходные файлы\Genetic algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="DefaultPopulation.cpp">
+      <Filter>Исходные файлы\Genetic algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="CutSettingsHolder.cpp">
+      <Filter>Исходные файлы\Settings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CutStrip.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DummyPopulation.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Figure2D.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="IUnit.h">
+    <ClInclude Include="BaseUnit.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePopulation.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultPopulation.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSettingsHolder.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CutSettingsHolder.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MpiFriendly.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="IPopulation.h">

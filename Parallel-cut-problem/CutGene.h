@@ -1,4 +1,5 @@
 #pragma once
+#include "MpiFriendly.h"
 //#ifndef CutGene_H
 //#define CutGene_H
 
