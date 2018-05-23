@@ -9,4 +9,7 @@ public:
 
 	void Initialize();
 	BaseUnit * CreateUnit();
+	void MpiSend(int destination, MPI_Comm communicator);
+	void MpiReceive(int source, MPI_Comm communicator);
+
 };

@@ -233,8 +233,8 @@ void CutUnit::MpiSend(int destination, MPI_Comm communicator) {
 		orderBuffer[i] = genes[i].order;
 	}
 	MPI_Send(positionXBuffer, figures.size(), MPI_FLOAT, destination, 0, communicator);
-	MPI_Send(rotationBuffer, figures.size(), MPI_FLOAT, destination, 0, communicator);
-	MPI_Send(orderBuffer, figures.size(), MPI_INT, destination, 0, communicator);
+	MPI_Send(rotationBuffer, figures.size(), MPI_FLOAT, destination, 1, communicator);
+	MPI_Send(orderBuffer, figures.size(), MPI_INT, destination, 2, communicator);
 	delete[] positionXBuffer;
 	delete[] rotationBuffer;
 	delete[] orderBuffer;
@@ -250,8 +250,8 @@ void CutUnit::MpiReceive(int source, MPI_Comm communicator) {
 	int * orderBuffer = new int[figures.size()];
 	MPI_Status status;
 	MPI_Recv(positionXBuffer, figures.size(), MPI_FLOAT, source, 0, communicator, &status);
-	MPI_Recv(rotationBuffer, figures.size(), MPI_FLOAT, source, 0, communicator, &status);
-	MPI_Recv(orderBuffer, figures.size(), MPI_INT, source, 0, communicator, &status);
+	MPI_Recv(rotationBuffer, figures.size(), MPI_FLOAT, source, 1, communicator, &status);
+	MPI_Recv(orderBuffer, figures.size(), MPI_INT, source, 2, communicator, &status);
 	for (int i = 0; i < figures.size(); i++) {
 		genes[i].positionX = positionXBuffer[i];
 		genes[i].rotation = rotationBuffer[i];

@@ -1,7 +1,8 @@
 #pragma once
 #include "BaseUnit.h"
+#include "MpiFriendly.h"
 
-class BaseSettingsHolder {
+class BaseSettingsHolder : MpiFriendly{
 public:
 	int unitsSize = 100;
 	int maximumSteps = 1000;
@@ -9,6 +10,4 @@ public:
 	int newCrossingoverUnits = 10;
 	virtual void Initialize() {};
 	virtual BaseUnit * CreateUnit() { return nullptr; }
-	virtual void MpiSend() {};
-	virtual void MpiReceive() {};
 };
