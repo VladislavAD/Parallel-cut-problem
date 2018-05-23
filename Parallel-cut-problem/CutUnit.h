@@ -7,6 +7,7 @@
 #include <list>
 #include <algorithm>
 #include <vector>
+#include <string>
 
 class CutUnit : public BaseUnit {
 private:
@@ -16,6 +17,7 @@ private:
 	const float horizontalMutation = 1.0f;
 
 	CutGene * genes = NULL;
+	std::string outputPositions;
 
 public:
 	CutUnit();
@@ -53,6 +55,16 @@ public:
 
 	virtual float GetEvaluation();
 	void Evaluate();
+
+	static std::string PrintFigures();
+
+	virtual std::string GetPositions();
+
+	/*static void fillFigures(std::list<Figure2D> newFigures) {
+		while (newFigures.front) {
+
+		}
+	}*/
 	void Delete();
 	virtual BaseUnit * Copy();
 };

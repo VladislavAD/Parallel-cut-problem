@@ -5,6 +5,7 @@
 #include "Position.cpp"
 #include <memory>
 #include <algorithm>
+#include <string>
 
 class CutStrip {
 private:
@@ -32,4 +33,6 @@ public:
 	int * SortOrderOfGenes(CutGene genes[], int size);
 
 	Point * GetResultPositions();
+
+	std::string PrintPositionsOfFigures();
 };

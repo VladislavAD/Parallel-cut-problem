@@ -115,3 +115,13 @@ Point * CutStrip::GetResultPositions()
 {
 	return positionsOfFigures;
 }
+
+std::string CutStrip::PrintPositionsOfFigures() {
+	std::string stringPositions = "";
+	for (int i = 0; i < figures.size(); i++) {
+		stringPositions += std::to_string(genes[i].rotation) + " ";
+		stringPositions += std::to_string(positionsOfFigures[i].x) + " ";
+		stringPositions += std::to_string(positionsOfFigures[i].y) + "\n";
+	}
+	return stringPositions;
+}
