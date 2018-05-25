@@ -135,7 +135,7 @@ public:
 	}
 
 	void MpiReceive(int source, MPI_Comm communicator) {
-		MPI_Status * status;
+		MPI_Status * status = 0;
 		int vertexesCount = 0;
 		MPI_Recv(&vertexesCount, 1, MPI_INT, source, 0, communicator, status);
 		vertexes = std::vector<Point>(vertexesCount);

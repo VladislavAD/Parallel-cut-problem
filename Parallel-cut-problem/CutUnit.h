@@ -44,7 +44,7 @@ public:
 	virtual void MutateGene(int number);
 	virtual void MutateGene();
 	virtual void * ExtractGene(int geneNumber);
-	BaseUnit CrossingoverWithUnit(BaseUnit unit);
+	BaseUnit * CrossingoverWithUnit(BaseUnit * unit);
 	void MpiSend(int destination, MPI_Comm communicator);
 	void MpiReceive(int source, MPI_Comm communicator);
 

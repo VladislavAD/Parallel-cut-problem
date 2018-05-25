@@ -134,8 +134,8 @@ void * CutUnit::ExtractGene(int geneNumber) {
 	return NULL;
 }
 
-BaseUnit CutUnit::CrossingoverWithUnit(BaseUnit unit) {
-	CutUnit * castUnit = dynamic_cast<CutUnit*>(&unit);
+BaseUnit * CutUnit::CrossingoverWithUnit(BaseUnit * unit) {
+	CutUnit * castUnit = dynamic_cast<CutUnit*>(unit);
 	int exchangeGeneNumber = rand() % figures.size();
 	CutUnit newCutUnit = *this;
 	int oldOrder = this->genes[exchangeGeneNumber].order;
@@ -151,7 +151,7 @@ BaseUnit CutUnit::CrossingoverWithUnit(BaseUnit unit) {
 
 	newCutUnit.genes[exchangeGeneNumber] = castUnit->genes[exchangeGeneNumber];
 
-	return newCutUnit;
+	return &newCutUnit;
 }
 
 /// <summary>
@@ -267,7 +267,7 @@ std::string CutUnit::PrintFigures() {
 	std::string figuresString = "";
 	figuresString += std::to_string(figures.size()) + '\n';
 	for (int i = 0; i < figures.size(); i++) {
-		figuresString += figures[i].PrintFigure();
+		figuresString += figures[i]->PrintFigure();
 	}
 	return figuresString;
 }
