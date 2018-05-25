@@ -1,4 +1,3 @@
-#pragma once
 #include "DefaultPopulation.h"
 #include "CutSettingsHolder.h"
 #include "mpi.h"

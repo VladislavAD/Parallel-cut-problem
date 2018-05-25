@@ -2,7 +2,7 @@
 #include "BaseUnit.h"
 #include "MpiFriendly.h"
 
-class BaseSettingsHolder : MpiFriendly{
+class BaseSettingsHolder : public MpiFriendly{
 public:
 	int unitsSize = 100;
 	int maximumSteps = 1000;
