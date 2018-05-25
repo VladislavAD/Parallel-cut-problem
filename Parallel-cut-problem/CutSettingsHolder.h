@@ -7,6 +7,8 @@ public:
 	float lineWidth = 2.1;
 	std::vector<Figure2D*> figures;
 
+	CutSettingsHolder();
+
 	void Initialize();
 	BaseUnit * CreateUnit();
 	void MpiSend(int destination, MPI_Comm communicator);

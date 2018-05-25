@@ -1,5 +1,10 @@
 #include "CutSettingsHolder.h"
 
+CutSettingsHolder::CutSettingsHolder()
+{
+	figures = std::vector<Figure2D*>(0);
+}
+
 void CutSettingsHolder::Initialize() {
 	CutUnit::SetLineWidth(lineWidth);
 	for (int i = 0; i < figures.size(); i++)
