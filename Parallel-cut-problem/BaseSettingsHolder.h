@@ -4,6 +4,6 @@
 
 class BaseSettingsHolder : public MpiFriendly{
 public:
-	virtual void Initialize() = 0;
-	virtual BaseUnit * CreateUnit() = 0;
+	//virtual void Initialize() = 0;
+	//virtual BaseUnit * CreateUnit() = 0;
 };
