@@ -12,6 +12,7 @@ public:
 	std::vector<Figure2D*> figures;
 
 	CutSettingsHolder();
+	~CutSettingsHolder();
 
 	void Initialize();
 	BaseUnit * CreateUnit();

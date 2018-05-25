@@ -5,6 +5,10 @@ CutSettingsHolder::CutSettingsHolder()
 	figures = std::vector<Figure2D*>(0);
 }
 
+CutSettingsHolder::~CutSettingsHolder()
+{
+}
+
 void CutSettingsHolder::Initialize() {
 	CutUnit::SetLineWidth(lineWidth);
 	for (int i = 0; i < figures.size(); i++)
