@@ -4,6 +4,10 @@
 
 class CutSettingsHolder : public BaseSettingsHolder {
 public:
+	int unitsSize = 10;
+	int maximumSteps = 10;
+	int newMutateUnits = 1;
+	int newCrossingoverUnits = 1;
 	float lineWidth = 2.1;
 	std::vector<Figure2D*> figures;
 
