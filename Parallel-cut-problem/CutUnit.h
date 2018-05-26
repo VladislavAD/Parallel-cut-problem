@@ -40,10 +40,10 @@ public:
 	///</summary>
 	void InitializeGenes();
 
-	virtual int GetGenesCount();
-	virtual void MutateGene(int number);
-	virtual void MutateGene();
-	virtual void * ExtractGene(int geneNumber);
+	int GetGenesCount();
+	void MutateGene(int number);
+	void MutateGene();
+	void * ExtractGene(int geneNumber);
 	BaseUnit * CrossingoverWithUnit(BaseUnit * unit);
 	void MpiSend(int destination, MPI_Comm communicator);
 	void MpiReceive(int source, MPI_Comm communicator);
@@ -53,12 +53,12 @@ public:
 	/// </summary>
 	CutUnit DummyCrossingover(CutUnit unit);
 
-	virtual float GetEvaluation();
+	float GetEvaluation();
 	void Evaluate();
 
 	static std::string PrintFigures();
 
-	virtual std::string GetPositions();
+	std::string GetPositions();
 
 	/*static void fillFigures(std::list<Figure2D> newFigures) {
 		while (newFigures.front) {
@@ -66,5 +66,5 @@ public:
 		}
 	}*/
 	void Delete();
-	virtual BaseUnit * Copy();
+	BaseUnit * Copy();
 };

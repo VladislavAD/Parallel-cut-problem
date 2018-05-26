@@ -9,18 +9,18 @@
 //{
 //}
 
-//void CutSettingsHolder::Initialize() {
-//	CutUnit::SetLineWidth(lineWidth);
-//	for (int i = 0; i < figures.size(); i++)
-//	{
-//		CutUnit::AddFigure(figures[i]);
-//	}
-//}
+void CutSettingsHolder::Initialize() {
+	CutUnit::SetLineWidth(lineWidth);
+	for (int i = 0; i < figures.size(); i++)
+	{
+		CutUnit::AddFigure(figures[i]);
+	}
+}
 
-//BaseUnit * CutSettingsHolder::CreateUnit() { 
-//	CutUnit newUnit = CutUnit();
-//	return new CutUnit();
-//}
+BaseUnit * CutSettingsHolder::CreateUnit() { 
+	CutUnit newUnit = CutUnit();
+	return new CutUnit();
+}
 
 void CutSettingsHolder::MpiSend(int destination, MPI_Comm communicator)
 {

@@ -3,8 +3,6 @@
 
 class BaseUnit : public MpiFriendly {
 public:
-	BaseUnit() {};
-	~BaseUnit() {};
 	virtual int GetGenesCount() { return 0; }
 	virtual void MutateGene(int number) {}
 	virtual float GetEvaluation() { return 0; }

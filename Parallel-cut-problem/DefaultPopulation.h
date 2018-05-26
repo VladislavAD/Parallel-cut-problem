@@ -6,7 +6,7 @@
 #include <iostream>
 #include <algorithm>
 
-class DefaultPopulation : BasePopulation {
+class DefaultPopulation : public BasePopulation {
 public:
 	DefaultPopulation(BaseSettingsHolder * settingsHolder);
 	bool Step();

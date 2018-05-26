@@ -4,6 +4,11 @@
 
 class BaseSettingsHolder : public MpiFriendly{
 public:
-	//virtual void Initialize() = 0;
-	//virtual BaseUnit * CreateUnit() = 0;
+	int unitsSize = 10;
+	int maximumSteps = 10;
+	int newMutateUnits = 1;
+	int newCrossingoverUnits = 1;
+
+	virtual void Initialize() = 0;
+	virtual BaseUnit * CreateUnit() = 0;
 };
