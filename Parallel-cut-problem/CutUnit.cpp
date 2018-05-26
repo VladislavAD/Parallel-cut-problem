@@ -127,11 +127,8 @@ void CutUnit::MutateGene() {
 	}
 }
 
-void * CutUnit::ExtractGene(int geneNumber) {
-	if (geneNumber >= 0 && geneNumber < figures.size()) {
-		return &genes[geneNumber];
-	}
-	return NULL;
+float CutUnit::GetEvaluation() {
+	return evaluation;
 }
 
 BaseUnit * CutUnit::CrossingoverWithUnit(BaseUnit * unit) {
@@ -154,30 +151,11 @@ BaseUnit * CutUnit::CrossingoverWithUnit(BaseUnit * unit) {
 	return &newCutUnit;
 }
 
-/// <summary>
-///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи
-/// </summary>
-CutUnit CutUnit::DummyCrossingover(CutUnit unit) {
-	int exchangeGeneNumber = rand() % figures.size();
-	CutUnit newCutUnit = *this;
-	int oldOrder = this->genes[exchangeGeneNumber].order;
-	int newOrder = unit.genes[exchangeGeneNumber].order;
-
-	// ћен€ем пор€док у гена с таким же пор€дком, какой будет новый
-	for (int i = 0; i < figures.size(); i++) {
-		if (this->genes[i].order == newOrder) {
-			newCutUnit.genes[i].order = oldOrder;
-			break;
-		}
+void * CutUnit::ExtractGene(int geneNumber) {
+	if (geneNumber >= 0 && geneNumber < figures.size()) {
+		return &genes[geneNumber];
 	}
-
-	newCutUnit.genes[exchangeGeneNumber] = unit.genes[exchangeGeneNumber];
-
-	return newCutUnit;
-}
-
-float CutUnit::GetEvaluation() {
-	return evaluation;
+	return NULL;
 }
 
 void CutUnit::Evaluate() {
@@ -213,6 +191,29 @@ BaseUnit * CutUnit::Copy()
 	}
 	return copyUnit;
 }
+
+/// <summary>
+///  остыльсинговер, берем ген из особи в параметре и создаЄм новый ген себ€ с геном второй особи
+/// </summary>
+CutUnit CutUnit::DummyCrossingover(CutUnit unit) {
+	int exchangeGeneNumber = rand() % figures.size();
+	CutUnit newCutUnit = *this;
+	int oldOrder = this->genes[exchangeGeneNumber].order;
+	int newOrder = unit.genes[exchangeGeneNumber].order;
+
+	// ћен€ем пор€док у гена с таким же пор€дком, какой будет новый
+	for (int i = 0; i < figures.size(); i++) {
+		if (this->genes[i].order == newOrder) {
+			newCutUnit.genes[i].order = oldOrder;
+			break;
+		}
+	}
+
+	newCutUnit.genes[exchangeGeneNumber] = unit.genes[exchangeGeneNumber];
+
+	return newCutUnit;
+}
+
 
 void CutUnit::MpiSend(int destination, MPI_Comm communicator) {
 	/*CutGene value;

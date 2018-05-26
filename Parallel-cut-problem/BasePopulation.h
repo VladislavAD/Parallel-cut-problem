@@ -11,12 +11,12 @@ protected:
 	int steps = 0;
 
 public:
-	BasePopulation(BaseSettingsHolder * settingsHolder) {}
-	bool Step() {}
-	void Mutate() {}
-	void Sort() {}
-	void Crossingover() {}
-	bool CheckStop() {}
-	void MpiSendUnit(int unitNumber, int destination, MPI_Comm communicator) {}
-	void MpiReceiveUnit(int source, MPI_Comm communicator) {}
+	BasePopulation(BaseSettingsHolder * settingsHolder) {};
+	virtual bool Step() = 0;
+	virtual void Mutate() = 0;
+	virtual void Sort() = 0;
+	virtual void Crossingover() = 0;
+	virtual bool CheckStop() = 0;
+	//void MpiSendUnit(int unitNumber, int destination, MPI_Comm communicator) {}
+	//void MpiReceiveUnit(int source, MPI_Comm communicator) {}
 };

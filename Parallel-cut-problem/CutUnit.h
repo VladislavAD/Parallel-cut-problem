@@ -43,8 +43,12 @@ public:
 	int GetGenesCount();
 	void MutateGene(int number);
 	void MutateGene();
-	void * ExtractGene(int geneNumber);
+	float GetEvaluation();
 	BaseUnit * CrossingoverWithUnit(BaseUnit * unit);
+	void * ExtractGene(int geneNumber);
+	void Evaluate();
+	void Delete();
+	BaseUnit * Copy();
 	void MpiSend(int destination, MPI_Comm communicator);
 	void MpiReceive(int source, MPI_Comm communicator);
 
@@ -53,8 +57,6 @@ public:
 	/// </summary>
 	CutUnit DummyCrossingover(CutUnit unit);
 
-	float GetEvaluation();
-	void Evaluate();
 
 	static std::string PrintFigures();
 
@@ -65,6 +67,4 @@ public:
 
 		}
 	}*/
-	void Delete();
-	BaseUnit * Copy();
 };
